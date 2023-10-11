@@ -16,12 +16,15 @@
     "lodash": "^4.17.21",
     "next": "13.5.4",
     "react": "18",
-    "react-dom": "18"
+    "react-dom": "18",
+    "react-icons": "^4.11.0",
+    "react-window": "^1.8.9"
   },
   "devDependencies": {
     "@types/node": "20",
     "@types/react": "18",
     "@types/react-dom": "18",
+    "@types/react-window": "^1.8.6",
     "eslint": "8",
     "eslint-config-next": "13.5.4",
     "typescript": "5"

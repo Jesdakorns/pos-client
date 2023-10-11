@@ -26,7 +26,10 @@ import {
 import Button from "@/components/Button/Button";
 import React from "react";
 import { styled } from "@mui/material/styles";
+import ButtonCT from "@/components/Button/Button";
 var _ = require("lodash");
+import { FixedSizeList, ListChildComponentProps } from "react-window";
+import { FaCirclePlus, FaCircleMinus, FaTrash } from "react-icons/fa6";
 
 const StyledFab = styled(Fab)({
   position: "absolute",
@@ -184,78 +187,204 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+function renderRow(props: ListChildComponentProps) {
+  const { index, style } = props;
+
+  return (
+    <ListItem style={style} key={index} component="div" disablePadding>
+      <ListItemText primary={`Item ${index + 1}`} />
+    </ListItem>
+  );
+}
+
 export default function Home() {
   const dataOrder = _.groupBy(messages, "mode");
   return (
-    <main>
-      <Container>
-        <Typography
-          variant="h5"
-          gutterBottom
-          component="div"
-          sx={{ pt: 2, pb: 0 }}
-        >
-          Order
-        </Typography>
+    <Box component="main" sx={{ px: { xs: 0, md: 2 } }}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={7} xl={9}>
+          <Box>
+            <Typography
+              variant="h5"
+              gutterBottom
+              component="div"
+              sx={{ pt: 2, pb: 0 }}
+            >
+              Order
+            </Typography>
 
-        {Object.keys(dataOrder).map((val, id) => {
-          const res: Messages[] = dataOrder[val];
-          return (
-            <React.Fragment key={id}>
-              <Typography variant="h5" component="h2" sx={{ my: 2 }}>
-                {val}
-              </Typography>
+            <Box sx={{ overflow: "auto", height: "90vh" }}>
+              {Object.keys(dataOrder).map((val, id) => {
+                const res: Messages[] = dataOrder[val];
+                return (
+                  <React.Fragment key={id}>
+                    <Typography variant="h5" component="h2" sx={{ my: 2 }}>
+                      {val}
+                    </Typography>
 
-              {/* <ListSubheader sx={{ bgcolor: "background.paper" }}> */}
-              <Grid container spacing={2}>
-                {res.map((valMap, idx) => {
-                  return (
-                    <Grid item xs={12} sm={4} md={4} lg={3} key={idx}>
-                      <Card>
-                        <CardActionArea
-                          sx={{
-                            display: { xs: "flex", sm: "block" },
-                            justifyContent: "flex-start",
-                          }}
-                        >
-                          <CardMedia
-                            component="img"
-                            sx={{
-                              width: { xs: 151, sm: "100%" },
-                              height: { xs: "auto", sm: 180 },
-                            }}
-                            image="https://images.immediate.co.uk/production/volatile/sites/30/2013/05/spaghetti-carbonara-382837d.jpg?resize=768,574"
-                            alt="green iguana"
-                          />
-                          <Box
-                            sx={{
-                              display: "flex",
-                              flexDirection: "column",
-                            }}
+                    <Grid container spacing={2}>
+                      {res.map((valMap, idx) => {
+                        return (
+                          <Grid
+                            item
+                            xs={12}
+                            sm={12}
+                            md={6}
+                            lg={4}
+                            xl={2}
+                            key={idx}
                           >
-                            <CardContent sx={{ flex: { xs: "1 0 auto" } }}>
-                              <Typography component="div" variant="h5">
-                                Live From Space
-                              </Typography>
-                              <Typography
-                                variant="subtitle1"
-                                color="text.secondary"
-                                component="div"
+                            <Card>
+                              <CardActionArea
+                                sx={{
+                                  display: { xs: "flex", md: "block" },
+                                  justifyContent: "flex-start",
+                                }}
                               >
-                                Mac Miller
-                              </Typography>
-                            </CardContent>
-                          </Box>
-                        </CardActionArea>
-                      </Card>
+                                <CardMedia
+                                  component="img"
+                                  sx={{
+                                    width: { xs: 151, md: "100%" },
+                                    height: { xs: "auto", md: 180 },
+                                  }}
+                                  image="https://images.immediate.co.uk/production/volatile/sites/30/2013/05/spaghetti-carbonara-382837d.jpg?resize=768,574"
+                                  alt="green iguana"
+                                />
+                                <Box
+                                  sx={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                  }}
+                                >
+                                  <CardContent
+                                    sx={{ flex: { xs: "1 0 auto" } }}
+                                  >
+                                    <Typography component="div" variant="h6">
+                                      Live From Space
+                                    </Typography>
+                                    <Typography
+                                      variant="subtitle1"
+                                      color="text.secondary"
+                                      component="div"
+                                    >
+                                      0.00
+                                    </Typography>
+                                  </CardContent>
+                                </Box>
+                              </CardActionArea>
+                            </Card>
+                          </Grid>
+                        );
+                      })}
                     </Grid>
-                  );
-                })}
+                  </React.Fragment>
+                );
+              })}
+            </Box>
+          </Box>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          md={5}
+          xl={3}
+          sx={{ display: { xs: "none", md: "block" } }}
+        >
+          <Box sx={{ height: "98%" }}>
+            <Typography variant="h5" component="h2" sx={{ my: 2 }}>
+              รายการ โต๊ะ 6-2
+            </Typography>
+            <Box
+              sx={{
+                width: "100%",
+                height: "90%",
+                overflowY: "auto",
+                bgcolor: "background.paper",
+              }}
+            >
+              <Card sx={{ position: "relative" }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    sx={{
+                      width: 150,
+                      height: 150,
+                    }}
+                    image="https://images.immediate.co.uk/production/volatile/sites/30/2013/05/spaghetti-carbonara-382837d.jpg?resize=768,574"
+                    alt="green iguana"
+                  />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      width: "100%",
+                    }}
+                  >
+                    <CardContent sx={{ flex: "1 0 auto" }}>
+                      <Typography component="div" variant="h6">
+                        Live From Space
+                      </Typography>
+                      <Typography
+                        variant="subtitle1"
+                        color="text.secondary"
+                        component="div"
+                      >
+                        0.00
+                      </Typography>
+                    </CardContent>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "flex-end",
+                        pl: 1,
+                        pb: 1,
+                      }}
+                    >
+                      <IconButton aria-label="previous" size="large">
+                        <FaCircleMinus />
+                      </IconButton>
+                      <IconButton aria-label="play/pause">1</IconButton>
+                      <IconButton aria-label="next" size="large">
+                        <FaCirclePlus />
+                      </IconButton>
+                      <IconButton aria-label="next" size="large" color="error">
+                        <FaTrash />
+                      </IconButton>
+                    </Box>
+                  </Box>
+                </Box>
+              </Card>
+            </Box>
+            {/* <Box sx={{ height: "90%" }}></Box> */}
+            <Box>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <ButtonCT
+                    variant="contained"
+                    size="large"
+                    color="secondary"
+                    fullWidth
+                  >
+                    ยกเลิก
+                  </ButtonCT>
+                </Grid>
+                <Grid item xs={6}>
+                  <ButtonCT variant="contained" size="large" fullWidth>
+                    สั่งอาหาร
+                  </ButtonCT>
+                </Grid>
               </Grid>
-            </React.Fragment>
-          );
-        })}
-      </Container>
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+
       <AppBar position="fixed" color="primary" sx={{ top: "auto", bottom: 0 }}>
         <Toolbar>
           <IconButton color="inherit" aria-label="open drawer"></IconButton>
@@ -265,6 +394,6 @@ export default function Home() {
           <IconButton color="inherit"></IconButton>
         </Toolbar>
       </AppBar>
-    </main>
+    </Box>
   );
 }
